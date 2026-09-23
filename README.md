@@ -59,8 +59,7 @@ Both artifacts use the same parameters, rules, and generator (mulberry32 seeded 
 |---|---|---|---|
 | 2026-09-23 | macOS, Python 3.12.4, matplotlib 3.8.4 | `jupyter nbconvert --execute` on the notebook | all cells ran; "All checks passed." |
 | 2026-09-23 | macOS, Python 3.12.4 and 3.14 (standard library only) | `python -m unittest discover -s tests` | 18 tests OK |
-| `[date]` | Google Colab | Runtime → Run all | `[record the result]` |
-
+| 2026-09-23 | Google Colab, Python 3.13.15, matplotlib 3.10.0 | Runtime → Run all (cells executed 1–9 in order) | no errors; every printed number identical to the local run; "All checks passed." |
 ## Limits
 
 Risk-neutral symmetric companies with independent uniform costs; one auction; losing companies are passive; audits are perfectly accurate; sycophancy is binary; E, k, and F are illustrative, not estimated. Classroom game records are exploratory evidence only.
