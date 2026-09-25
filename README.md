@@ -4,7 +4,7 @@ COMSCI/ECON 206 PS2 computational artifact · Muhan Chen. Synthetic inputs only;
 
 **Question.** A government pays one company, from a fixed grant, to build a non-sycophantic chatbot. It runs a second-price tender and then audits the winner. How strong must the audit be for the grant to buy honesty, and what happens to spending when the audit is weak?
 
-- Runnable notebook (Colab): [open in Google Colab](https://colab.research.google.com/drive/1XcVJLJuhNvaXDy526kxYN6wWfZH4XxHc?usp=sharing)
+- Runnable notebook (Colab): [open in Google Colab](https://colab.research.google.com/github/cmh9595/Honest-Chatbot-Subsidy-Auction/blob/v1.1-review/PS2_chatbot_subsidy_auction.ipynb)
 - Behavioral artifact (Hugging Face game, same model and seeds): [Honest_Chatbot Space](https://huggingface.co/spaces/dku-comsci-econ206-2026/Honest_Chatbot)
 - Review-ready version: tag [`v1.1-review`](https://github.com/cmh9595/Honest-Chatbot-Subsidy-Auction/releases/tag/v1.1-review) (commit SHA recorded in the paper's Open Science Statement)
 
