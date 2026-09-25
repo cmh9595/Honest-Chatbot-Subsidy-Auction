@@ -60,7 +60,7 @@ Both artifacts use the same parameters, rules, and generator (mulberry32 seeded 
 |---|---|---|---|
 | 2026-09-25 | macOS, Python 3.12.4, matplotlib 3.8.4 | `jupyter nbconvert --execute` on the notebook | all cells ran; "All checks passed." |
 | 2026-09-25 | macOS, Python 3.12.4 and 3.14 (standard library only) | `python -m unittest discover -s tests` | 16 tests OK |
-| `[date]` | Google Colab | Runtime → Run all | `[record the result]` |
+| 2026-09-25 | Google Colab, Python 3.13.15, matplotlib 3.10.0 | notebook opened from tag `v1.1-review`; Runtime → Run all (cells 1–9 in order) | no errors; every printed number identical to the local run; "All checks passed." |
 
 ## Limits
 
