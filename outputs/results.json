@@ -8,520 +8,240 @@
   "extra_tuning_cost": 10.0,
   "audit_prob": 0.5,
   "fine": 50.0,
-  "rounds_per_rule": 3
+  "rounds": 5
  },
  "audit_threshold": 0.4,
  "expected_cheat_value": -5.0,
  "expected_spending_exact": 39.73119999599986,
  "comparison": {
-  "second": {
-   "rule": "second",
+  "strong": {
+   "audit_prob": 0.5,
    "trials": 50000,
    "seed": 206,
+   "winner_cheats": false,
+   "cheating_rent": 0.0,
    "mean_spending": 39.68384663337274,
    "sd_spending": 19.728687723954344,
-   "mean_payment_when_awarded": 39.743461826111904,
    "award_rate": 0.9985,
    "efficient_rate": 1.0,
    "honest_delivery_rate": 0.9985,
    "spending_per_honest_chatbot": 39.743461826111904,
-   "mean_winner_cost": 19.955165884249997,
    "mean_winner_profit": 19.788295941861904,
-   "mean_fines_collected": 0.0,
-   "winner_cheats": false
+   "mean_fines_collected": 0.0
   },
-  "first": {
-   "rule": "first",
+  "weak": {
+   "audit_prob": 0.3,
    "trials": 50000,
    "seed": 206,
-   "mean_spending": 39.77753149099862,
-   "sd_spending": 12.087837089598226,
-   "mean_payment_when_awarded": 39.83728742213182,
-   "award_rate": 0.9985,
-   "efficient_rate": 1.0,
-   "honest_delivery_rate": 0.9985,
-   "spending_per_honest_chatbot": 39.83728742213182,
-   "mean_winner_cost": 19.955165884249997,
-   "mean_winner_profit": 19.88212153788182,
-   "mean_fines_collected": 0.0,
-   "winner_cheats": false
+   "winner_cheats": true,
+   "cheating_rent": 5.0,
+   "mean_spending": 34.89342416796777,
+   "sd_spending": 19.87479475569648,
+   "award_rate": 0.99964,
+   "efficient_rate": 0.9909,
+   "honest_delivery_rate": 0.0,
+   "spending_per_honest_chatbot": null,
+   "mean_winner_profit": 19.961897913686542,
+   "mean_fines_collected": 14.899
   }
  },
  "audit_sweep": [
   {
    "audit_prob": 0.0,
-   "rule": "second",
-   "rent": 20.0,
+   "cheating_rent": 20.0,
    "mean_spending": 20.790337541577408,
    "sd_spending": 18.152531205328412,
    "honest_delivery_rate": 0.0,
-   "spending_per_honest_chatbot": null,
    "mean_winner_profit": 20.211550762864295,
    "mean_fines_collected": 0.0
   },
   {
-   "audit_prob": 0.0,
-   "rule": "first",
-   "rent": 20.0,
-   "mean_spending": 19.92805323449138,
-   "sd_spending": 12.250480994139233,
-   "honest_delivery_rate": 0.0,
-   "spending_per_honest_chatbot": null,
-   "mean_winner_profit": 20.02398225516954,
-   "mean_fines_collected": 0.0
-  },
-  {
    "audit_prob": 0.05,
-   "rule": "second",
-   "rent": 17.5,
+   "cheating_rent": 17.5,
    "mean_spending": 22.873285915751477,
    "sd_spending": 18.64628049954229,
    "honest_delivery_rate": 0.0,
-   "spending_per_honest_chatbot": null,
    "mean_winner_profit": 19.993177934873383,
    "mean_fines_collected": 2.515
   },
   {
-   "audit_prob": 0.05,
-   "rule": "first",
-   "rent": 17.5,
-   "mean_spending": 22.42801812203453,
-   "sd_spending": 12.250426754981978,
-   "honest_delivery_rate": 0.0,
-   "spending_per_honest_chatbot": null,
-   "mean_winner_profit": 20.00894714271269,
-   "mean_fines_collected": 2.515
-  },
-  {
    "audit_prob": 0.1,
-   "rule": "second",
-   "rent": 15.0,
+   "cheating_rent": 15.0,
    "mean_spending": 25.044798089662567,
    "sd_spending": 19.060636741724416,
    "honest_delivery_rate": 0.0,
-   "spending_per_honest_chatbot": null,
    "mean_winner_profit": 19.956036787511316,
    "mean_fines_collected": 4.89
   },
   {
-   "audit_prob": 0.1,
-   "rule": "first",
-   "rent": 15.0,
-   "mean_spending": 24.92749143518175,
-   "sd_spending": 12.24961347065897,
-   "honest_delivery_rate": 0.0,
-   "spending_per_honest_chatbot": null,
-   "mean_winner_profit": 20.13342045585991,
-   "mean_fines_collected": 4.89
-  },
-  {
    "audit_prob": 0.15,
-   "rule": "second",
-   "rent": 12.5,
+   "cheating_rent": 12.5,
    "mean_spending": 27.29940244394727,
    "sd_spending": 19.385083014018623,
    "honest_delivery_rate": 0.0,
-   "spending_per_honest_chatbot": null,
    "mean_winner_profit": 19.719462510658428,
    "mean_fines_collected": 7.49
   },
   {
-   "audit_prob": 0.15,
-   "rule": "first",
-   "rent": 12.5,
-   "mean_spending": 27.42520912548639,
-   "sd_spending": 12.246095806721435,
-   "honest_delivery_rate": 0.0,
-   "spending_per_honest_chatbot": null,
-   "mean_winner_profit": 20.031138146164544,
-   "mean_fines_collected": 7.49
-  },
-  {
    "audit_prob": 0.2,
-   "rule": "second",
-   "rent": 10.0,
+   "cheating_rent": 10.0,
    "mean_spending": 29.618656853978987,
    "sd_spending": 19.608591426067658,
    "honest_delivery_rate": 0.0,
-   "spending_per_honest_chatbot": null,
    "mean_winner_profit": 19.539420153218806,
    "mean_fines_collected": 10.095
   },
   {
-   "audit_prob": 0.2,
-   "rule": "first",
-   "rent": 10.0,
-   "mean_spending": 29.911109313617995,
-   "sd_spending": 12.230266190434232,
-   "honest_delivery_rate": 0.0,
-   "spending_per_honest_chatbot": null,
-   "mean_winner_profit": 19.921180866283862,
-   "mean_fines_collected": 10.095
-  },
-  {
    "audit_prob": 0.25,
-   "rule": "second",
-   "rent": 7.5,
+   "cheating_rent": 7.5,
    "mean_spending": 32.00323504266329,
    "sd_spending": 19.741456837761046,
    "honest_delivery_rate": 0.0,
-   "spending_per_honest_chatbot": null,
    "mean_winner_profit": 19.465135451929136,
    "mean_fines_collected": 12.605
   },
   {
-   "audit_prob": 0.25,
-   "rule": "first",
-   "rent": 7.5,
-   "mean_spending": 32.39849044738692,
-   "sd_spending": 12.21352996133087,
-   "honest_delivery_rate": 0.0,
-   "spending_per_honest_chatbot": null,
-   "mean_winner_profit": 19.898559737939955,
-   "mean_fines_collected": 12.605
-  },
-  {
    "audit_prob": 0.3,
-   "rule": "second",
-   "rent": 5.0,
+   "cheating_rent": 5.0,
    "mean_spending": 34.40699324187543,
    "sd_spending": 19.782661784989358,
    "honest_delivery_rate": 0.0,
-   "spending_per_honest_chatbot": null,
    "mean_winner_profit": 19.563121838160505,
    "mean_fines_collected": 14.95
   },
   {
-   "audit_prob": 0.3,
-   "rule": "first",
-   "rent": 5.0,
-   "mean_spending": 34.85976786575075,
-   "sd_spending": 12.176140954936747,
-   "honest_delivery_rate": 0.0,
-   "spending_per_honest_chatbot": null,
-   "mean_winner_profit": 20.032016305624705,
-   "mean_fines_collected": 14.95
-  },
-  {
    "audit_prob": 0.35,
-   "rule": "second",
-   "rent": 2.5,
+   "cheating_rent": 2.5,
    "mean_spending": 36.82823754789727,
    "sd_spending": 19.74360868527875,
    "honest_delivery_rate": 0.0,
-   "spending_per_honest_chatbot": null,
    "mean_winner_profit": 19.56406660839494,
    "mean_fines_collected": 17.41
   },
   {
-   "audit_prob": 0.35,
-   "rule": "first",
-   "rent": 2.5,
-   "mean_spending": 37.29880554738771,
-   "sd_spending": 12.124712708885927,
-   "honest_delivery_rate": 0.0,
-   "spending_per_honest_chatbot": null,
-   "mean_winner_profit": 20.036237689871182,
-   "mean_fines_collected": 17.41
-  },
-  {
    "audit_prob": 0.4,
-   "rule": "second",
-   "rent": 0.0,
+   "cheating_rent": 0.0,
    "mean_spending": 39.2268403170025,
    "sd_spending": 19.645053071081495,
    "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.27396907989838,
-   "mean_winner_profit": 19.44609463992437,
-   "mean_fines_collected": 0.0
-  },
-  {
-   "audit_prob": 0.4,
-   "rule": "first",
-   "rent": 0.0,
-   "mean_spending": 39.69490455588641,
-   "sd_spending": 12.058798921599935,
-   "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.742595670691244,
-   "mean_winner_profit": 19.91472123071724,
-   "mean_fines_collected": 0.0
-  },
-  {
-   "audit_prob": 0.45,
-   "rule": "second",
-   "rent": 0.0,
-   "mean_spending": 39.2268403170025,
-   "sd_spending": 19.645053071081495,
-   "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.27396907989838,
    "mean_winner_profit": 19.44609463992437,
    "mean_fines_collected": 0.0
   },
   {
    "audit_prob": 0.45,
-   "rule": "first",
-   "rent": 0.0,
-   "mean_spending": 39.69490455588641,
-   "sd_spending": 12.058798921599935,
-   "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.742595670691244,
-   "mean_winner_profit": 19.91472123071724,
-   "mean_fines_collected": 0.0
-  },
-  {
-   "audit_prob": 0.5,
-   "rule": "second",
-   "rent": 0.0,
+   "cheating_rent": 0.0,
    "mean_spending": 39.2268403170025,
    "sd_spending": 19.645053071081495,
    "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.27396907989838,
    "mean_winner_profit": 19.44609463992437,
    "mean_fines_collected": 0.0
   },
   {
    "audit_prob": 0.5,
-   "rule": "first",
-   "rent": 0.0,
-   "mean_spending": 39.69490455588641,
-   "sd_spending": 12.058798921599935,
-   "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.742595670691244,
-   "mean_winner_profit": 19.91472123071724,
-   "mean_fines_collected": 0.0
-  },
-  {
-   "audit_prob": 0.55,
-   "rule": "second",
-   "rent": 0.0,
+   "cheating_rent": 0.0,
    "mean_spending": 39.2268403170025,
    "sd_spending": 19.645053071081495,
    "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.27396907989838,
    "mean_winner_profit": 19.44609463992437,
    "mean_fines_collected": 0.0
   },
   {
    "audit_prob": 0.55,
-   "rule": "first",
-   "rent": 0.0,
-   "mean_spending": 39.69490455588641,
-   "sd_spending": 12.058798921599935,
-   "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.742595670691244,
-   "mean_winner_profit": 19.91472123071724,
-   "mean_fines_collected": 0.0
-  },
-  {
-   "audit_prob": 0.6,
-   "rule": "second",
-   "rent": 0.0,
+   "cheating_rent": 0.0,
    "mean_spending": 39.2268403170025,
    "sd_spending": 19.645053071081495,
    "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.27396907989838,
    "mean_winner_profit": 19.44609463992437,
    "mean_fines_collected": 0.0
   },
   {
    "audit_prob": 0.6,
-   "rule": "first",
-   "rent": 0.0,
-   "mean_spending": 39.69490455588641,
-   "sd_spending": 12.058798921599935,
-   "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.742595670691244,
-   "mean_winner_profit": 19.91472123071724,
-   "mean_fines_collected": 0.0
-  },
-  {
-   "audit_prob": 0.65,
-   "rule": "second",
-   "rent": 0.0,
+   "cheating_rent": 0.0,
    "mean_spending": 39.2268403170025,
    "sd_spending": 19.645053071081495,
    "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.27396907989838,
    "mean_winner_profit": 19.44609463992437,
    "mean_fines_collected": 0.0
   },
   {
    "audit_prob": 0.65,
-   "rule": "first",
-   "rent": 0.0,
-   "mean_spending": 39.69490455588641,
-   "sd_spending": 12.058798921599935,
-   "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.742595670691244,
-   "mean_winner_profit": 19.91472123071724,
-   "mean_fines_collected": 0.0
-  },
-  {
-   "audit_prob": 0.7,
-   "rule": "second",
-   "rent": 0.0,
+   "cheating_rent": 0.0,
    "mean_spending": 39.2268403170025,
    "sd_spending": 19.645053071081495,
    "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.27396907989838,
    "mean_winner_profit": 19.44609463992437,
    "mean_fines_collected": 0.0
   },
   {
    "audit_prob": 0.7,
-   "rule": "first",
-   "rent": 0.0,
-   "mean_spending": 39.69490455588641,
-   "sd_spending": 12.058798921599935,
-   "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.742595670691244,
-   "mean_winner_profit": 19.91472123071724,
-   "mean_fines_collected": 0.0
-  },
-  {
-   "audit_prob": 0.75,
-   "rule": "second",
-   "rent": 0.0,
+   "cheating_rent": 0.0,
    "mean_spending": 39.2268403170025,
    "sd_spending": 19.645053071081495,
    "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.27396907989838,
    "mean_winner_profit": 19.44609463992437,
    "mean_fines_collected": 0.0
   },
   {
    "audit_prob": 0.75,
-   "rule": "first",
-   "rent": 0.0,
-   "mean_spending": 39.69490455588641,
-   "sd_spending": 12.058798921599935,
-   "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.742595670691244,
-   "mean_winner_profit": 19.91472123071724,
-   "mean_fines_collected": 0.0
-  },
-  {
-   "audit_prob": 0.8,
-   "rule": "second",
-   "rent": 0.0,
+   "cheating_rent": 0.0,
    "mean_spending": 39.2268403170025,
    "sd_spending": 19.645053071081495,
    "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.27396907989838,
    "mean_winner_profit": 19.44609463992437,
    "mean_fines_collected": 0.0
   },
   {
    "audit_prob": 0.8,
-   "rule": "first",
-   "rent": 0.0,
-   "mean_spending": 39.69490455588641,
-   "sd_spending": 12.058798921599935,
-   "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.742595670691244,
-   "mean_winner_profit": 19.91472123071724,
-   "mean_fines_collected": 0.0
-  },
-  {
-   "audit_prob": 0.85,
-   "rule": "second",
-   "rent": 0.0,
+   "cheating_rent": 0.0,
    "mean_spending": 39.2268403170025,
    "sd_spending": 19.645053071081495,
    "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.27396907989838,
    "mean_winner_profit": 19.44609463992437,
    "mean_fines_collected": 0.0
   },
   {
    "audit_prob": 0.85,
-   "rule": "first",
-   "rent": 0.0,
-   "mean_spending": 39.69490455588641,
-   "sd_spending": 12.058798921599935,
-   "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.742595670691244,
-   "mean_winner_profit": 19.91472123071724,
-   "mean_fines_collected": 0.0
-  },
-  {
-   "audit_prob": 0.9,
-   "rule": "second",
-   "rent": 0.0,
+   "cheating_rent": 0.0,
    "mean_spending": 39.2268403170025,
    "sd_spending": 19.645053071081495,
    "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.27396907989838,
    "mean_winner_profit": 19.44609463992437,
    "mean_fines_collected": 0.0
   },
   {
    "audit_prob": 0.9,
-   "rule": "first",
-   "rent": 0.0,
-   "mean_spending": 39.69490455588641,
-   "sd_spending": 12.058798921599935,
-   "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.742595670691244,
-   "mean_winner_profit": 19.91472123071724,
-   "mean_fines_collected": 0.0
-  },
-  {
-   "audit_prob": 0.95,
-   "rule": "second",
-   "rent": 0.0,
+   "cheating_rent": 0.0,
    "mean_spending": 39.2268403170025,
    "sd_spending": 19.645053071081495,
    "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.27396907989838,
    "mean_winner_profit": 19.44609463992437,
    "mean_fines_collected": 0.0
   },
   {
    "audit_prob": 0.95,
-   "rule": "first",
-   "rent": 0.0,
-   "mean_spending": 39.69490455588641,
-   "sd_spending": 12.058798921599935,
-   "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.742595670691244,
-   "mean_winner_profit": 19.91472123071724,
-   "mean_fines_collected": 0.0
-  },
-  {
-   "audit_prob": 1.0,
-   "rule": "second",
-   "rent": 0.0,
+   "cheating_rent": 0.0,
    "mean_spending": 39.2268403170025,
    "sd_spending": 19.645053071081495,
    "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.27396907989838,
    "mean_winner_profit": 19.44609463992437,
    "mean_fines_collected": 0.0
   },
   {
    "audit_prob": 1.0,
-   "rule": "first",
-   "rent": 0.0,
-   "mean_spending": 39.69490455588641,
-   "sd_spending": 12.058798921599935,
+   "cheating_rent": 0.0,
+   "mean_spending": 39.2268403170025,
+   "sd_spending": 19.645053071081495,
    "honest_delivery_rate": 0.9988,
-   "spending_per_honest_chatbot": 39.742595670691244,
-   "mean_winner_profit": 19.91472123071724,
+   "mean_winner_profit": 19.44609463992437,
    "mean_fines_collected": 0.0
   }
  ],
  "game_session_206": {
   "code": "206",
   "seed": 3186052587,
-  "ruleOrder": [
-   "first",
-   "second"
-  ],
   "rounds": [
    {
     "round": 1,
-    "rule": "first",
     "playerCost": 6.3,
     "rivalCosts": [
      38.9,
@@ -532,7 +252,6 @@
    },
    {
     "round": 2,
-    "rule": "first",
     "playerCost": 49.8,
     "rivalCosts": [
      46.9,
@@ -543,7 +262,6 @@
    },
    {
     "round": 3,
-    "rule": "first",
     "playerCost": 63.0,
     "rivalCosts": [
      44.5,
@@ -554,7 +272,6 @@
    },
    {
     "round": 4,
-    "rule": "second",
     "playerCost": 87.5,
     "rivalCosts": [
      84.4,
@@ -565,7 +282,6 @@
    },
    {
     "round": 5,
-    "rule": "second",
     "playerCost": 12.3,
     "rivalCosts": [
      98.8,
@@ -573,17 +289,6 @@
      38.5
     ],
     "audited": true
-   },
-   {
-    "round": 6,
-    "rule": "second",
-    "playerCost": 59.9,
-    "rivalCosts": [
-     56.7,
-     39.2,
-     95.5
-    ],
-    "audited": false
    }
   ]
  }

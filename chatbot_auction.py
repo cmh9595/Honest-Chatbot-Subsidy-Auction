@@ -1,8 +1,8 @@
-"""Who builds the honest chatbot? A reverse subsidy auction with a post-award compliance audit.
+"""Who builds the honest chatbot? A second-price subsidy tender with a post-award compliance audit.
 
-COMSCI/ECON 206 PS2 computational artifact. Python standard library only (matplotlib is used
-only by the optional plotting helpers). The rules, benchmarks, and seeded random generator are
-a line-by-line port of the Hugging Face game's game_logic.js, so a session code produces the
+COMSCI/ECON 206 PS2 computational artifact (Muhan Chen). Python standard library only (matplotlib
+is used only by the optional plotting helper). The rules, benchmark, and seeded random generator
+are a line-by-line port of the Hugging Face game's game_logic.js, so a session code produces the
 same costs, audits, and outcomes in both artifacts.
 """
 from __future__ import annotations
@@ -14,36 +14,35 @@ import statistics
 from dataclasses import asdict, dataclass, replace
 
 MASK = 0xFFFFFFFF
-RULES = ("second", "first")
-RULE_NAMES = {"second": "Second-price", "first": "First-price"}
 RIVAL_NAMES = ("Rival A", "Rival B", "Rival C")
+WEAK_AUDIT = 0.3
 
 
 @dataclass(frozen=True)
 class Config:
-    n: int = 4                     # companies per auction
-    cost_max: float = 100.0        # private cost of the honest chatbot ~ Uniform(0, cost_max)
-    cap: float = 80.0              # fixed subsidy pool: maximum grant (reserve price)
-    engagement_gain: float = 30.0  # E: extra engagement revenue from a sycophantic chatbot
+    n: int = 4                       # companies per auction
+    cost_max: float = 100.0          # private cost of the honest chatbot ~ Uniform(0, cost_max)
+    cap: float = 80.0                # fixed subsidy pool: maximum grant (reserve price)
+    engagement_gain: float = 30.0    # E: extra engagement revenue from a sycophantic chatbot
     extra_tuning_cost: float = 10.0  # k: extra cost of tuning the chatbot to be sycophantic
-    audit_prob: float = 0.5        # p: probability the regulator audits the winner
-    fine: float = 50.0             # F: fine when the audit finds sycophancy
-    rounds_per_rule: int = 3       # game rounds under each rule
+    audit_prob: float = 0.5          # p: probability the regulator audits the winner
+    fine: float = 50.0               # F: fine when the audit finds sycophancy
+    rounds: int = 5                  # game rounds per session
 
     def __post_init__(self):
-        values = asdict(self)
-        if any(not math.isfinite(v) for v in values.values()):
+        if any(not math.isfinite(v) for v in asdict(self).values()):
             raise ValueError("Parameters must be finite.")
-        if self.n < 2 or self.rounds_per_rule < 1:
-            raise ValueError("Need at least 2 companies and 1 round per rule.")
+        if self.n < 2 or self.rounds < 1:
+            raise ValueError("Need at least 2 companies and 1 round.")
         if not 0 < self.cap <= self.cost_max:
             raise ValueError("Cap must lie in (0, cost_max].")
         if not 0 <= self.audit_prob <= 1:
             raise ValueError("Audit probability must lie in [0, 1].")
         if min(self.engagement_gain, self.extra_tuning_cost, self.fine) < 0:
             raise ValueError("Gain, tuning cost, and fine must be nonnegative.")
-        if cheating_rent(self) > self.cost_max - self.cap:
-            raise ValueError("Cheating rent must not exceed cost_max - cap for the first-price formula.")
+
+
+BASELINE = Config()
 
 
 def round1(x: float) -> float:
@@ -102,55 +101,31 @@ def cheating_rent(cfg: Config) -> float:
     return max(0.0, expected_cheat_value(cfg))
 
 
-BASELINE = Config()
+def benchmark_bid_exact(cost: float, cfg: Config = BASELINE) -> float:
+    """Weakly dominant bid in a reverse second-price tender: cost minus cheating rent, floored at 0."""
+    return max(0.0, cost - cheating_rent(cfg))
 
 
-def benchmark_bid_exact(cost: float, rule: str, cfg: Config) -> float:
-    """Risk-neutral IPV benchmark bid for a company with the given honest-build cost.
-
-    Second price: bid the effective cost e = cost - rent, floored at 0 (weakly dominant).
-    First price: symmetric BNE of a reverse auction with reserve `cap` and e ~ U[-rent, M],
-        b(e) = e + [(M - e)^n - (M - cap)^n] / [n (M - e)^(n-1)],  M = cost_max - rent.
-    """
-    rent = cheating_rent(cfg)
-    e = cost - rent
-    if rule == "second":
-        return max(0.0, e)
-    if rule != "first":
-        raise ValueError(f"Unknown rule: {rule}")
-    if e >= cfg.cap:
-        return e
-    m, n = cfg.cost_max - rent, cfg.n
-    return e + ((m - e) ** n - (m - cfg.cap) ** n) / (n * (m - e) ** (n - 1))
-
-
-def benchmark_bid(cost: float, rule: str, cfg: Config = BASELINE) -> float:
+def benchmark_bid(cost: float, cfg: Config = BASELINE) -> float:
     """Benchmark bid rounded to 0.1, as displayed and used by the game's computer rivals."""
-    return round1(benchmark_bid_exact(cost, rule, cfg))
+    return round1(benchmark_bid_exact(cost, cfg))
 
 
 def valid_bid(bid) -> bool:
     return isinstance(bid, (int, float)) and not isinstance(bid, bool) and math.isfinite(bid) and 0 <= bid <= 100
 
 
-def run_auction(bids, rule: str, cap: float, rounding: bool = True):
-    """Lowest bid <= cap wins; ties go to the lower index (the player is index 0).
-
-    Second price pays min(second-lowest bid, cap); first price pays the winner's bid.
-    Returns (winner, payment) with winner = -1 when no bid is at or below the cap.
-    """
+def run_auction(bids, cap: float, rounding: bool = True):
+    """Reverse second-price tender: the lowest bid <= cap wins (ties go to the lower index, the player
+    is index 0) and is paid min(second-lowest bid, cap). Returns (winner, payment); winner = -1 when
+    no bid is at or below the cap."""
     if len(bids) < 2 or not all(valid_bid(b) for b in bids):
         raise ValueError("Bids must be at least two numbers between 0 and 100.")
     order = sorted(range(len(bids)), key=lambda i: (bids[i], i))
     winner = order[0]
     if bids[winner] > cap:
         return -1, 0.0
-    if rule == "second":
-        payment = min(bids[order[1]], cap)
-    elif rule == "first":
-        payment = bids[winner]
-    else:
-        raise ValueError(f"Unknown rule: {rule}")
+    payment = min(bids[order[1]], cap)
     return winner, round1(payment) if rounding else payment
 
 
@@ -174,41 +149,33 @@ def round_profit(won: bool, payment: float, cost: float, cheat: bool, caught: bo
 
 
 def make_schedule(code, cfg: Config = BASELINE) -> dict:
-    """Deterministic game schedule: costs, audits, and rule order for a session code."""
+    """Deterministic game schedule: costs and audits for a session code."""
     seed = seed_from_code(code)
     rng = mulberry32(seed)
-    rule_order = ["second", "first"] if seed % 2 == 0 else ["first", "second"]
     rounds = []
-    for i in range(2 * cfg.rounds_per_rule):
+    for i in range(cfg.rounds):
         player_cost = round1(rng() * cfg.cost_max)
         rival_costs = [round1(rng() * cfg.cost_max) for _ in range(cfg.n - 1)]
         audited = rng() < cfg.audit_prob
-        rounds.append({
-            "round": i + 1,
-            "rule": rule_order[i // cfg.rounds_per_rule],
-            "playerCost": player_cost,
-            "rivalCosts": rival_costs,
-            "audited": audited,
-        })
-    return {"code": str(code), "seed": seed, "ruleOrder": rule_order, "rounds": rounds}
+        rounds.append({"round": i + 1, "playerCost": player_cost, "rivalCosts": rival_costs, "audited": audited})
+    return {"code": str(code), "seed": seed, "rounds": rounds}
 
 
 def resolve_round(r: dict, player_bid: float, player_cheats: bool, cfg: Config = BASELINE) -> dict:
     """One game round given the player's bid and comply/cheat choice (same fields as the game)."""
-    rival_bids = [benchmark_bid(c, r["rule"], cfg) for c in r["rivalCosts"]]
+    rival_bids = [benchmark_bid(c, cfg) for c in r["rivalCosts"]]
     bids = [player_bid] + rival_bids
     costs = [r["playerCost"]] + r["rivalCosts"]
-    winner, payment = run_auction(bids, r["rule"], cfg.cap)
+    winner, payment = run_auction(bids, cfg.cap)
     cheated = None
     if winner == 0:
         cheated = bool(player_cheats)
     elif winner > 0:
         cheated = rational_cheats(cfg)
     caught = cheated is True and r["audited"]
-    bench = benchmark_bid(r["playerCost"], r["rule"], cfg)
+    bench = benchmark_bid(r["playerCost"], cfg)
     return {
         "round": r["round"],
-        "rule": r["rule"],
         "playerCost": r["playerCost"],
         "playerBid": player_bid,
         "benchmarkBid": bench,
@@ -227,24 +194,22 @@ def resolve_round(r: dict, player_bid: float, player_cheats: bool, cfg: Config =
     }
 
 
-def simulate(rule: str, cfg: Config = BASELINE, trials: int = 20000, seed: int = 206) -> dict:
-    """Monte Carlo of the rational benchmark: all n companies bid the benchmark, the winner
-    complies or cheats rationally, and the regulator audits with probability p.
-
-    Uses unrounded bids and payments. The same seed gives both rules identical cost and audit
-    draws (common random numbers), so differences come from the rule alone.
-    """
+def simulate(cfg: Config = BASELINE, trials: int = 50000, seed: int = 206) -> dict:
+    """Monte Carlo of the rational benchmark: all n companies bid the benchmark, the winner complies
+    or cheats rationally, and the regulator audits with probability p. Uses unrounded bids and
+    payments. The same seed gives every setting identical cost and audit draws."""
     if trials < 1:
         raise ValueError("trials must be positive.")
     rng = mulberry32(seed)
     cheats = rational_cheats(cfg)
-    payments, winner_costs, profits = [], [], []
-    awarded = efficient = honest = fines = 0
+    payments, profits = [], []
+    awarded = efficient = honest = 0
+    fines = 0.0
     for _ in range(trials):
         costs = [rng() * cfg.cost_max for _ in range(cfg.n)]
         audited = rng() < cfg.audit_prob
-        bids = [min(100.0, benchmark_bid_exact(c, rule, cfg)) for c in costs]
-        winner, payment = run_auction(bids, rule, cfg.cap, rounding=False)
+        bids = [benchmark_bid_exact(c, cfg) for c in costs]
+        winner, payment = run_auction(bids, cfg.cap, rounding=False)
         efficient += is_efficient(costs, winner, cfg.cap)
         payments.append(payment)
         if winner == -1:
@@ -253,48 +218,44 @@ def simulate(rule: str, cfg: Config = BASELINE, trials: int = 20000, seed: int =
         caught = cheats and audited
         honest += not cheats
         fines += cfg.fine if caught else 0.0
-        winner_costs.append(costs[winner])
         profits.append(round_profit(True, payment, costs[winner], cheats, caught, cfg, rounding=False))
     total_spend = sum(payments)
     return {
-        "rule": rule,
+        "audit_prob": cfg.audit_prob,
         "trials": trials,
         "seed": seed,
+        "winner_cheats": cheats,
+        "cheating_rent": cheating_rent(cfg),
         "mean_spending": total_spend / trials,
         "sd_spending": statistics.pstdev(payments),
-        "mean_payment_when_awarded": total_spend / awarded if awarded else None,
         "award_rate": awarded / trials,
         "efficient_rate": efficient / trials,
         "honest_delivery_rate": honest / trials,
         "spending_per_honest_chatbot": total_spend / honest if honest else None,
-        "mean_winner_cost": statistics.fmean(winner_costs) if winner_costs else None,
         "mean_winner_profit": statistics.fmean(profits) if profits else None,
         "mean_fines_collected": fines / trials,
-        "winner_cheats": cheats,
     }
 
 
-def compare_rules(cfg: Config = BASELINE, trials: int = 20000, seed: int = 206) -> dict:
-    return {rule: simulate(rule, cfg, trials, seed) for rule in RULES}
+def compare_audits(cfg: Config = BASELINE, weak_p: float = WEAK_AUDIT, trials: int = 50000, seed: int = 206) -> dict:
+    """The required comparison: the same second-price tender under a strong and a weak audit."""
+    return {"strong": simulate(cfg, trials, seed), "weak": simulate(replace(cfg, audit_prob=weak_p), trials, seed)}
 
 
 def audit_sweep(cfg: Config = BASELINE, probs=None, trials: int = 10000, seed: int = 206) -> list:
-    """Parameter change: vary the audit probability p and rerun both rules."""
+    """Parameter change: vary the audit probability p from 0 to 1."""
     probs = probs if probs is not None else [i / 20 for i in range(21)]
     rows = []
     for p in probs:
-        c = replace(cfg, audit_prob=p)
-        for rule in RULES:
-            s = simulate(rule, c, trials, seed)
-            rows.append({"audit_prob": p, "rule": rule, "rent": cheating_rent(c), **{
-                k: s[k] for k in ("mean_spending", "sd_spending", "honest_delivery_rate",
-                                  "spending_per_honest_chatbot", "mean_winner_profit", "mean_fines_collected")}})
+        s = simulate(replace(cfg, audit_prob=p), trials, seed)
+        rows.append({k: s[k] for k in ("audit_prob", "cheating_rent", "mean_spending", "sd_spending",
+                                       "honest_delivery_rate", "mean_winner_profit", "mean_fines_collected")})
     return rows
 
 
 def expected_spending_exact(cfg: Config = BASELINE, steps: int = 20000) -> float:
-    """Expected second-price spending with no cheating rent, by midpoint integration:
-    E[min(C_(2), cap) * 1{C_(1) <= cap}]. Revenue equivalence says first price matches."""
+    """Expected spending when audits deter cheating, by midpoint integration:
+    E[min(C_(2), cap) * 1{C_(1) <= cap}]."""
     n, cmax, cap = cfg.n, cfg.cost_max, cfg.cap
     total, h = 0.0, cmax / steps
     for i in range(steps):
@@ -312,19 +273,16 @@ def summarize_classroom(paths) -> dict:
     for path in paths:
         with open(path, newline="", encoding="utf-8") as fh:
             rows.extend(csv.DictReader(fh))
-    out = {"players": len(paths), "rounds": len(rows)}
-    for rule in RULES:
-        rr = [r for r in rows if r["rule"] == rule]
-        gaps = [float(r["bid_minus_benchmark"]) for r in rr]
-        wins = [r for r in rr if r["winner"] == "You"]
-        out[rule] = {
-            "rounds": len(rr),
-            "mean_bid_gap": statistics.fmean(gaps) if gaps else None,
-            "share_within_1_of_benchmark": sum(abs(g) <= 1 for g in gaps) / len(gaps) if gaps else None,
-            "player_wins": len(wins),
-            "player_cheat_rate": sum(r["winner_cheated"] == "true" for r in wins) / len(wins) if wins else None,
-        }
-    return out
+    gaps = [float(r["bid_minus_benchmark"]) for r in rows]
+    wins = [r for r in rows if r["winner"] == "You"]
+    return {
+        "players": len(paths),
+        "rounds": len(rows),
+        "mean_bid_gap": statistics.fmean(gaps) if gaps else None,
+        "share_within_1_of_cost": sum(abs(g) <= 1 for g in gaps) / len(gaps) if gaps else None,
+        "player_wins": len(wins),
+        "player_cheat_rate": sum(r["winner_cheated"] == "true" for r in wins) / len(wins) if wins else None,
+    }
 
 
 def plot_results(cfg: Config, comparison: dict, sweep: list, out_dir: str = "outputs/figures"):
@@ -336,45 +294,50 @@ def plot_results(cfg: Config, comparison: dict, sweep: list, out_dir: str = "out
 
     os.makedirs(out_dir, exist_ok=True)
     paths = []
+    weak = replace(cfg, audit_prob=WEAK_AUDIT)
+    strong_c, weak_c = "#14877d", "#b4461f"
 
     costs = [i / 10 for i in range(0, int(cfg.cost_max * 10) + 1)]
     fig, ax = plt.subplots(figsize=(5, 3.6))
-    ax.plot(costs, [benchmark_bid_exact(c, "second", cfg) for c in costs], label="Second-price: bid = cost")
-    ax.plot(costs, [benchmark_bid_exact(c, "first", cfg) for c in costs], label="First-price: equilibrium bid")
-    ax.axhline(cfg.cap, color="grey", ls="--", lw=1, label=f"Grant cap = {cfg.cap:g}")
+    ax.plot(costs, [benchmark_bid_exact(c, cfg) for c in costs], color=strong_c,
+            label=f"Strong audit (p = {cfg.audit_prob:g}): bid = cost")
+    ax.plot(costs, [benchmark_bid_exact(c, weak) for c in costs], color=weak_c, ls="--",
+            label=f"Weak audit (p = {WEAK_AUDIT:g}): bid = cost − {cheating_rent(weak):g}")
+    ax.axhline(cfg.cap, color="grey", ls=":", lw=1, label=f"Grant cap = {cfg.cap:g}")
     ax.set_xlabel("Private cost of the honest chatbot")
-    ax.set_ylabel("Benchmark bid")
-    ax.set_title("Rational bids under the two rules")
+    ax.set_ylabel("Rational bid")
+    ax.set_title("Rational bids in the second-price tender")
     ax.legend(fontsize=8)
     fig.tight_layout()
-    paths.append(os.path.join(out_dir, "fig1_bid_functions.png"))
+    paths.append(os.path.join(out_dir, "fig1_bids.png"))
     fig.savefig(paths[-1], dpi=200)
     plt.close(fig)
 
-    fig, ax = plt.subplots(figsize=(5, 3.6))
-    rules = list(RULES)
-    means = [comparison[r]["mean_spending"] for r in rules]
-    sds = [comparison[r]["sd_spending"] for r in rules]
-    ax.bar([RULE_NAMES[r] for r in rules], means, yerr=sds, capsize=6, color=["#14877d", "#315efb"])
-    for i, (m, s) in enumerate(zip(means, sds)):
-        ax.text(i, m + s + 1, f"mean {m:.1f}\nSD {s:.1f}", ha="center", fontsize=8)
-    ax.set_ylabel("Government spending per auction")
-    ax.set_title("Same expected spending, different risk")
-    ax.set_ylim(0, max(m + s for m, s in zip(means, sds)) + 12)
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(6.4, 3.4))
+    labels = [f"Strong\np = {cfg.audit_prob:g}", f"Weak\np = {WEAK_AUDIT:g}"]
+    s, w = comparison["strong"], comparison["weak"]
+    ax1.bar(labels, [s["mean_spending"], w["mean_spending"]], color=[strong_c, weak_c])
+    for i, v in enumerate([s["mean_spending"], w["mean_spending"]]):
+        ax1.text(i, v + 0.8, f"{v:.1f}", ha="center", fontsize=9)
+    ax1.set_ylabel("Mean government spending")
+    ax1.set_ylim(0, 48)
+    ax2.bar(labels, [100 * s["honest_delivery_rate"], 100 * w["honest_delivery_rate"]], color=[strong_c, weak_c])
+    for i, v in enumerate([100 * s["honest_delivery_rate"], 100 * w["honest_delivery_rate"]]):
+        ax2.text(i, v + 2, f"{v:.1f}%", ha="center", fontsize=9)
+    ax2.set_ylabel("Honest chatbot delivered (%)")
+    ax2.set_ylim(0, 115)
+    fig.suptitle("A weak audit looks cheaper but buys flattery", fontsize=11)
     fig.tight_layout()
-    paths.append(os.path.join(out_dir, "fig2_spending_by_rule.png"))
+    paths.append(os.path.join(out_dir, "fig2_strong_vs_weak.png"))
     fig.savefig(paths[-1], dpi=200)
     plt.close(fig)
 
     fig, ax1 = plt.subplots(figsize=(5.4, 3.6))
     ax2 = ax1.twinx()
-    for rule, color in (("second", "#14877d"), ("first", "#315efb")):
-        rows = [r for r in sweep if r["rule"] == rule]
-        ps = [r["audit_prob"] for r in rows]
-        ax1.plot(ps, [r["mean_spending"] for r in rows], color=color, label=f"{RULE_NAMES[rule]} spending")
-    rows = [r for r in sweep if r["rule"] == "second"]
-    ax2.step([r["audit_prob"] for r in rows], [r["honest_delivery_rate"] for r in rows], where="post",
-             color="#b4461f", ls="--", label="Honest chatbot delivered (both rules)")
+    ps = [r["audit_prob"] for r in sweep]
+    ax1.plot(ps, [r["mean_spending"] for r in sweep], color=strong_c, label="Mean spending")
+    ax2.step(ps, [r["honest_delivery_rate"] for r in sweep], where="post", color=weak_c, ls="--",
+             label="Honest chatbot share")
     ax1.axvline(audit_threshold(cfg), color="grey", lw=1, ls=":")
     ax1.text(audit_threshold(cfg) + 0.01, 0.9, f"p* = {audit_threshold(cfg):.2f}", fontsize=8,
              transform=ax1.get_xaxis_transform())
@@ -383,7 +346,7 @@ def plot_results(cfg: Config, comparison: dict, sweep: list, out_dir: str = "out
     ax1.set_ylim(0, 1.25 * max(r["mean_spending"] for r in sweep))
     ax2.set_ylabel("Honest chatbot share")
     ax2.set_ylim(-0.05, 1.25)
-    ax1.set_title("Weak audits look cheaper but buy sycophancy")
+    ax1.set_title("Audit strength: spending and honesty")
     h1, l1 = ax1.get_legend_handles_labels()
     h2, l2 = ax2.get_legend_handles_labels()
     ax1.legend(h1 + h2, l1 + l2, fontsize=7, loc="center right")
@@ -399,8 +362,7 @@ def main(out_path: str = "outputs/results.json", trials: int = 50000, seed: int 
     import platform
 
     cfg = BASELINE
-    comparison = compare_rules(cfg, trials, seed)
-    sweep = audit_sweep(cfg, seed=seed)
+    comparison = compare_audits(cfg, WEAK_AUDIT, trials, seed)
     results = {
         "python": platform.python_version(),
         "config": asdict(cfg),
@@ -408,20 +370,20 @@ def main(out_path: str = "outputs/results.json", trials: int = 50000, seed: int 
         "expected_cheat_value": expected_cheat_value(cfg),
         "expected_spending_exact": expected_spending_exact(cfg),
         "comparison": comparison,
-        "audit_sweep": sweep,
+        "audit_sweep": audit_sweep(cfg, seed=seed),
         "game_session_206": make_schedule("206", cfg),
     }
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as fh:
         json.dump(results, fh, indent=1)
-    print(f"Python {results['python']} | seed {seed} | {trials} auctions per rule")
+    print(f"Python {results['python']} | seed {seed} | {trials} auctions per setting")
     print(f"p* = {results['audit_threshold']:.2f}; E[cheat - comply] at p = {cfg.audit_prob} is "
           f"{results['expected_cheat_value']:.1f}")
-    print(f"Exact expected spending (both rules): {results['expected_spending_exact']:.2f}")
-    print(f"{'metric':32s}{'second':>10s}{'first':>10s}")
-    for key in ("mean_spending", "sd_spending", "efficient_rate", "honest_delivery_rate",
-                "mean_winner_cost", "mean_winner_profit"):
-        print(f"{key:32s}{comparison['second'][key]:10.3f}{comparison['first'][key]:10.3f}")
+    print(f"Exact expected spending under a strong audit: {results['expected_spending_exact']:.2f}")
+    print(f"{'metric':30s}{'strong p=0.5':>14s}{'weak p=0.3':>12s}")
+    for key in ("cheating_rent", "mean_spending", "sd_spending", "efficient_rate", "honest_delivery_rate",
+                "mean_winner_profit", "mean_fines_collected"):
+        print(f"{key:30s}{comparison['strong'][key]:14.3f}{comparison['weak'][key]:12.3f}")
     print(f"Wrote {out_path}")
     return results
 

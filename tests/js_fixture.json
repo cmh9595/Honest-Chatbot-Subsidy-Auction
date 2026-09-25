@@ -7,7 +7,7 @@
   "EXTRA_TUNING_COST": 10,
   "AUDIT_PROB": 0.5,
   "FINE": 50,
-  "ROUNDS_PER_RULE": 3
+  "ROUNDS": 5
  },
  "seeds": {
   "206": 3186052587,
@@ -19,14 +19,9 @@
   "206": {
    "code": "206",
    "seed": 3186052587,
-   "ruleOrder": [
-    "first",
-    "second"
-   ],
    "rounds": [
     {
      "round": 1,
-     "rule": "first",
      "playerCost": 6.3,
      "rivalCosts": [
       38.9,
@@ -37,7 +32,6 @@
     },
     {
      "round": 2,
-     "rule": "first",
      "playerCost": 49.8,
      "rivalCosts": [
       46.9,
@@ -48,7 +42,6 @@
     },
     {
      "round": 3,
-     "rule": "first",
      "playerCost": 63,
      "rivalCosts": [
       44.5,
@@ -59,7 +52,6 @@
     },
     {
      "round": 4,
-     "rule": "second",
      "playerCost": 87.5,
      "rivalCosts": [
       84.4,
@@ -70,7 +62,6 @@
     },
     {
      "round": 5,
-     "rule": "second",
      "playerCost": 12.3,
      "rivalCosts": [
       98.8,
@@ -78,31 +69,15 @@
       38.5
      ],
      "audited": true
-    },
-    {
-     "round": 6,
-     "rule": "second",
-     "playerCost": 59.9,
-     "rivalCosts": [
-      56.7,
-      39.2,
-      95.5
-     ],
-     "audited": false
     }
    ]
   },
   "207": {
    "code": "207",
    "seed": 3169274968,
-   "ruleOrder": [
-    "second",
-    "first"
-   ],
    "rounds": [
     {
      "round": 1,
-     "rule": "second",
      "playerCost": 93.9,
      "rivalCosts": [
       0.2,
@@ -113,7 +88,6 @@
     },
     {
      "round": 2,
-     "rule": "second",
      "playerCost": 69.7,
      "rivalCosts": [
       76,
@@ -124,7 +98,6 @@
     },
     {
      "round": 3,
-     "rule": "second",
      "playerCost": 20.4,
      "rivalCosts": [
       64.8,
@@ -135,7 +108,6 @@
     },
     {
      "round": 4,
-     "rule": "first",
      "playerCost": 56.5,
      "rivalCosts": [
       87.2,
@@ -146,23 +118,11 @@
     },
     {
      "round": 5,
-     "rule": "first",
      "playerCost": 99.4,
      "rivalCosts": [
       42.2,
       59,
       74.7
-     ],
-     "audited": true
-    },
-    {
-     "round": 6,
-     "rule": "first",
-     "playerCost": 49.1,
-     "rivalCosts": [
-      59.6,
-      11.1,
-      24.1
      ],
      "audited": true
     }
@@ -171,14 +131,9 @@
   "abc": {
    "code": "abc",
    "seed": 440920331,
-   "ruleOrder": [
-    "first",
-    "second"
-   ],
    "rounds": [
     {
      "round": 1,
-     "rule": "first",
      "playerCost": 51.7,
      "rivalCosts": [
       66,
@@ -189,7 +144,6 @@
     },
     {
      "round": 2,
-     "rule": "first",
      "playerCost": 47.4,
      "rivalCosts": [
       90.4,
@@ -200,7 +154,6 @@
     },
     {
      "round": 3,
-     "rule": "first",
      "playerCost": 31.6,
      "rivalCosts": [
       52.2,
@@ -211,7 +164,6 @@
     },
     {
      "round": 4,
-     "rule": "second",
      "playerCost": 71.7,
      "rivalCosts": [
       11.5,
@@ -222,23 +174,11 @@
     },
     {
      "round": 5,
-     "rule": "second",
      "playerCost": 31.6,
      "rivalCosts": [
       77.8,
       21,
       33.2
-     ],
-     "audited": false
-    },
-    {
-     "round": 6,
-     "rule": "second",
-     "playerCost": 85.7,
-     "rivalCosts": [
-      5.4,
-      83,
-      52.3
      ],
      "audited": false
     }
@@ -247,14 +187,9 @@
   "课堂": {
    "code": "课堂",
    "seed": 1191753561,
-   "ruleOrder": [
-    "first",
-    "second"
-   ],
    "rounds": [
     {
      "round": 1,
-     "rule": "first",
      "playerCost": 32.4,
      "rivalCosts": [
       65.4,
@@ -265,7 +200,6 @@
     },
     {
      "round": 2,
-     "rule": "first",
      "playerCost": 6,
      "rivalCosts": [
       15.7,
@@ -276,7 +210,6 @@
     },
     {
      "round": 3,
-     "rule": "first",
      "playerCost": 67.3,
      "rivalCosts": [
       33.7,
@@ -287,7 +220,6 @@
     },
     {
      "round": 4,
-     "rule": "second",
      "playerCost": 99.1,
      "rivalCosts": [
       18.5,
@@ -298,7 +230,6 @@
     },
     {
      "round": 5,
-     "rule": "second",
      "playerCost": 37.2,
      "rivalCosts": [
       24,
@@ -306,17 +237,6 @@
       15.2
      ],
      "audited": true
-    },
-    {
-     "round": 6,
-     "rule": "second",
-     "playerCost": 25.3,
-     "rivalCosts": [
-      79,
-      22.2,
-      33.6
-     ],
-     "audited": false
     }
    ]
   }
@@ -324,490 +244,381 @@
  "benchmarks": [
   [
    0,
-   "second",
    0
   ],
   [
-   0,
-   "first",
-   25
-  ],
-  [
    2.5,
-   "second",
    2.5
   ],
   [
-   2.5,
-   "first",
-   26.8
-  ],
-  [
    5,
-   "second",
    5
   ],
   [
-   5,
-   "first",
-   28.7
-  ],
-  [
    7.5,
-   "second",
    7.5
   ],
   [
-   7.5,
-   "first",
-   30.6
-  ],
-  [
    10,
-   "second",
    10
   ],
   [
-   10,
-   "first",
-   32.4
-  ],
-  [
    12.5,
-   "second",
    12.5
   ],
   [
-   12.5,
-   "first",
-   34.3
-  ],
-  [
    15,
-   "second",
    15
   ],
   [
-   15,
-   "first",
-   36.2
-  ],
-  [
    17.5,
-   "second",
    17.5
   ],
   [
-   17.5,
-   "first",
-   38.1
-  ],
-  [
    20,
-   "second",
    20
   ],
   [
-   20,
-   "first",
-   39.9
-  ],
-  [
    22.5,
-   "second",
    22.5
   ],
   [
-   22.5,
-   "first",
-   41.8
-  ],
-  [
    25,
-   "second",
    25
   ],
   [
-   25,
-   "first",
-   43.7
-  ],
-  [
    27.5,
-   "second",
    27.5
   ],
   [
-   27.5,
-   "first",
-   45.5
-  ],
-  [
    30,
-   "second",
    30
   ],
   [
-   30,
-   "first",
-   47.4
-  ],
-  [
    32.5,
-   "second",
    32.5
   ],
   [
-   32.5,
-   "first",
-   49.2
-  ],
-  [
    35,
-   "second",
    35
   ],
   [
-   35,
-   "first",
-   51.1
-  ],
-  [
    37.5,
-   "second",
    37.5
   ],
   [
-   37.5,
-   "first",
-   53
-  ],
-  [
    40,
-   "second",
    40
   ],
   [
-   40,
-   "first",
-   54.8
-  ],
-  [
    42.5,
-   "second",
    42.5
   ],
   [
-   42.5,
-   "first",
-   56.7
-  ],
-  [
    45,
-   "second",
    45
   ],
   [
-   45,
-   "first",
-   58.5
-  ],
-  [
    47.5,
-   "second",
    47.5
   ],
   [
-   47.5,
-   "first",
-   60.3
-  ],
-  [
    50,
-   "second",
    50
   ],
   [
-   50,
-   "first",
-   62.2
-  ],
-  [
    52.5,
-   "second",
    52.5
   ],
   [
-   52.5,
-   "first",
-   64
-  ],
-  [
    55,
-   "second",
    55
   ],
   [
-   55,
-   "first",
-   65.8
-  ],
-  [
    57.5,
-   "second",
    57.5
   ],
   [
-   57.5,
-   "first",
-   67.6
-  ],
-  [
    60,
-   "second",
    60
   ],
   [
-   60,
-   "first",
-   69.4
-  ],
-  [
    62.5,
-   "second",
    62.5
   ],
   [
-   62.5,
-   "first",
-   71.1
-  ],
-  [
    65,
-   "second",
    65
   ],
   [
-   65,
-   "first",
-   72.8
-  ],
-  [
    67.5,
-   "second",
    67.5
   ],
   [
-   67.5,
-   "first",
-   74.5
-  ],
-  [
    70,
-   "second",
    70
   ],
   [
-   70,
-   "first",
-   76
-  ],
-  [
    72.5,
-   "second",
    72.5
   ],
   [
-   72.5,
-   "first",
-   77.5
-  ],
-  [
    75,
-   "second",
    75
   ],
   [
-   75,
-   "first",
-   78.7
-  ],
-  [
    77.5,
-   "second",
    77.5
   ],
   [
+   80,
+   80
+  ],
+  [
+   82.5,
+   82.5
+  ],
+  [
+   85,
+   85
+  ],
+  [
+   87.5,
+   87.5
+  ],
+  [
+   90,
+   90
+  ],
+  [
+   92.5,
+   92.5
+  ],
+  [
+   95,
+   95
+  ],
+  [
+   97.5,
+   97.5
+  ],
+  [
+   100,
+   100
+  ]
+ ],
+ "benchmarks_weak": [
+  [
+   0,
+   0
+  ],
+  [
+   2.5,
+   0
+  ],
+  [
+   5,
+   0
+  ],
+  [
+   7.5,
+   2.5
+  ],
+  [
+   10,
+   5
+  ],
+  [
+   12.5,
+   7.5
+  ],
+  [
+   15,
+   10
+  ],
+  [
+   17.5,
+   12.5
+  ],
+  [
+   20,
+   15
+  ],
+  [
+   22.5,
+   17.5
+  ],
+  [
+   25,
+   20
+  ],
+  [
+   27.5,
+   22.5
+  ],
+  [
+   30,
+   25
+  ],
+  [
+   32.5,
+   27.5
+  ],
+  [
+   35,
+   30
+  ],
+  [
+   37.5,
+   32.5
+  ],
+  [
+   40,
+   35
+  ],
+  [
+   42.5,
+   37.5
+  ],
+  [
+   45,
+   40
+  ],
+  [
+   47.5,
+   42.5
+  ],
+  [
+   50,
+   45
+  ],
+  [
+   52.5,
+   47.5
+  ],
+  [
+   55,
+   50
+  ],
+  [
+   57.5,
+   52.5
+  ],
+  [
+   60,
+   55
+  ],
+  [
+   62.5,
+   57.5
+  ],
+  [
+   65,
+   60
+  ],
+  [
+   67.5,
+   62.5
+  ],
+  [
+   70,
+   65
+  ],
+  [
+   72.5,
+   67.5
+  ],
+  [
+   75,
+   70
+  ],
+  [
    77.5,
-   "first",
-   79.6
+   72.5
   ],
   [
    80,
-   "second",
-   80
-  ],
-  [
-   80,
-   "first",
-   80
+   75
   ],
   [
    82.5,
-   "second",
-   82.5
-  ],
-  [
-   82.5,
-   "first",
-   82.5
+   77.5
   ],
   [
    85,
-   "second",
-   85
-  ],
-  [
-   85,
-   "first",
-   85
+   80
   ],
   [
    87.5,
-   "second",
-   87.5
-  ],
-  [
-   87.5,
-   "first",
-   87.5
+   82.5
   ],
   [
    90,
-   "second",
-   90
-  ],
-  [
-   90,
-   "first",
-   90
+   85
   ],
   [
    92.5,
-   "second",
-   92.5
-  ],
-  [
-   92.5,
-   "first",
-   92.5
+   87.5
   ],
   [
    95,
-   "second",
-   95
-  ],
-  [
-   95,
-   "first",
-   95
+   90
   ],
   [
    97.5,
-   "second",
-   97.5
-  ],
-  [
-   97.5,
-   "first",
-   97.5
+   92.5
   ],
   [
    100,
-   "second",
-   100
-  ],
-  [
-   100,
-   "first",
-   100
+   95
   ]
  ],
  "rounds": [
   {
    "round": 1,
-   "rule": "first",
    "playerCost": 6.3,
-   "playerBid": 30,
-   "benchmarkBid": 29.7,
-   "bidGap": 0.3,
+   "playerBid": 2,
+   "benchmarkBid": 6.3,
+   "bidGap": -4.3,
    "rivalCosts": [
     38.9,
     13,
     2.3
    ],
    "rivalBids": [
-    54,
-    34.7,
-    26.7
+    38.9,
+    13,
+    2.3
    ],
-   "winner": 3,
-   "winnerName": "Rival C",
-   "payment": 26.7,
-   "efficient": true,
-   "cheated": false,
+   "winner": 0,
+   "winnerName": "You",
+   "payment": 2.3,
+   "efficient": false,
+   "cheated": true,
    "audited": false,
    "caught": false,
-   "honestDelivered": true,
-   "playerProfit": 0
+   "honestDelivered": false,
+   "playerProfit": 16
   },
   {
    "round": 2,
-   "rule": "first",
    "playerCost": 49.8,
    "playerBid": 20,
-   "benchmarkBid": 62,
-   "bidGap": -42,
+   "benchmarkBid": 49.8,
+   "bidGap": -29.8,
    "rivalCosts": [
     46.9,
     57.9,
     2.2
    ],
    "rivalBids": [
-    59.9,
-    67.9,
-    26.6
-   ],
-   "winner": 0,
-   "winnerName": "You",
-   "payment": 20,
-   "efficient": false,
-   "cheated": true,
-   "audited": true,
-   "caught": true,
-   "honestDelivered": false,
-   "playerProfit": -59.8
-  },
-  {
-   "round": 3,
-   "rule": "first",
-   "playerCost": 63,
-   "playerBid": 71,
-   "benchmarkBid": 71.5,
-   "bidGap": -0.5,
-   "rivalCosts": [
-    44.5,
-    97,
-    30.1
-   ],
-   "rivalBids": [
-    58.1,
-    97,
-    47.5
+    46.9,
+    57.9,
+    2.2
    ],
    "winner": 3,
    "winnerName": "Rival C",
-   "payment": 47.5,
+   "payment": 20,
    "efficient": true,
    "cheated": false,
    "audited": true,
@@ -816,8 +627,33 @@
    "playerProfit": 0
   },
   {
+   "round": 3,
+   "playerCost": 63,
+   "playerBid": 30,
+   "benchmarkBid": 63,
+   "bidGap": -33,
+   "rivalCosts": [
+    44.5,
+    97,
+    30.1
+   ],
+   "rivalBids": [
+    44.5,
+    97,
+    30.1
+   ],
+   "winner": 0,
+   "winnerName": "You",
+   "payment": 30.1,
+   "efficient": false,
+   "cheated": false,
+   "audited": true,
+   "caught": false,
+   "honestDelivered": true,
+   "playerProfit": -32.9
+  },
+  {
    "round": 4,
-   "rule": "second",
    "playerCost": 87.5,
    "playerBid": 90,
    "benchmarkBid": 87.5,
@@ -844,7 +680,6 @@
   },
   {
    "round": 5,
-   "rule": "second",
    "playerCost": 12.3,
    "playerBid": 10,
    "benchmarkBid": 12.3,
@@ -863,41 +698,14 @@
    "winnerName": "You",
    "payment": 11.3,
    "efficient": false,
-   "cheated": false,
+   "cheated": true,
    "audited": true,
-   "caught": false,
-   "honestDelivered": true,
-   "playerProfit": -1
-  },
-  {
-   "round": 6,
-   "rule": "second",
-   "playerCost": 59.9,
-   "playerBid": 59.9,
-   "benchmarkBid": 59.9,
-   "bidGap": 0,
-   "rivalCosts": [
-    56.7,
-    39.2,
-    95.5
-   ],
-   "rivalBids": [
-    56.7,
-    39.2,
-    95.5
-   ],
-   "winner": 2,
-   "winnerName": "Rival B",
-   "payment": 56.7,
-   "efficient": true,
-   "cheated": false,
-   "audited": false,
-   "caught": false,
-   "honestDelivered": true,
-   "playerProfit": 0
+   "caught": true,
+   "honestDelivered": false,
+   "playerProfit": -31
   }
  ],
- "csv": "session_code,seed,rule_order,round,rule,your_cost,your_bid,benchmark_bid,bid_minus_benchmark,rival_costs,rival_bids,winner,payment,efficient,winner_cheated,audited,caught,honest_chatbot_delivered,your_profit,strategy_second,clarity_second,strategy_first,clarity_first,promise_reason,note,config\n206,3186052587,first|second,1,first,6.3,30,29.7,0.3,38.9|13|2.3,54|34.7|26.7,Rival C,26.7,true,false,false,false,true,0,bid_cost,5,bid_below,3,gamble,\"test, with \"\"quotes\"\"\",N=4;COST_MAX=100;CAP=80;ENGAGEMENT_GAIN=30;EXTRA_TUNING_COST=10;AUDIT_PROB=0.5;FINE=50;ROUNDS_PER_RULE=3\n206,3186052587,first|second,2,first,49.8,20,62,-42,46.9|57.9|2.2,59.9|67.9|26.6,You,20,false,true,true,true,false,-59.8,bid_cost,5,bid_below,3,gamble,\"test, with \"\"quotes\"\"\",N=4;COST_MAX=100;CAP=80;ENGAGEMENT_GAIN=30;EXTRA_TUNING_COST=10;AUDIT_PROB=0.5;FINE=50;ROUNDS_PER_RULE=3\n206,3186052587,first|second,3,first,63,71,71.5,-0.5,44.5|97|30.1,58.1|97|47.5,Rival C,47.5,true,false,true,false,true,0,bid_cost,5,bid_below,3,gamble,\"test, with \"\"quotes\"\"\",N=4;COST_MAX=100;CAP=80;ENGAGEMENT_GAIN=30;EXTRA_TUNING_COST=10;AUDIT_PROB=0.5;FINE=50;ROUNDS_PER_RULE=3\n206,3186052587,first|second,4,second,87.5,90,87.5,2.5,84.4|4.5|2.7,84.4|4.5|2.7,Rival C,4.5,true,false,true,false,true,0,bid_cost,5,bid_below,3,gamble,\"test, with \"\"quotes\"\"\",N=4;COST_MAX=100;CAP=80;ENGAGEMENT_GAIN=30;EXTRA_TUNING_COST=10;AUDIT_PROB=0.5;FINE=50;ROUNDS_PER_RULE=3\n206,3186052587,first|second,5,second,12.3,10,12.3,-2.3,98.8|11.3|38.5,98.8|11.3|38.5,You,11.3,false,false,true,false,true,-1,bid_cost,5,bid_below,3,gamble,\"test, with \"\"quotes\"\"\",N=4;COST_MAX=100;CAP=80;ENGAGEMENT_GAIN=30;EXTRA_TUNING_COST=10;AUDIT_PROB=0.5;FINE=50;ROUNDS_PER_RULE=3\n206,3186052587,first|second,6,second,59.9,59.9,59.9,0,56.7|39.2|95.5,56.7|39.2|95.5,Rival B,56.7,true,false,false,false,true,0,bid_cost,5,bid_below,3,gamble,\"test, with \"\"quotes\"\"\",N=4;COST_MAX=100;CAP=80;ENGAGEMENT_GAIN=30;EXTRA_TUNING_COST=10;AUDIT_PROB=0.5;FINE=50;ROUNDS_PER_RULE=3",
+ "csv": "session_code,seed,round,your_cost,your_bid,benchmark_bid,bid_minus_benchmark,rival_costs,rival_bids,winner,payment,efficient,winner_cheated,audited,caught,honest_chatbot_delivered,your_profit,strategy,clarity,promise_reason,note,config\n206,3186052587,1,6.3,2,6.3,-4.3,38.9|13|2.3,38.9|13|2.3,You,2.3,false,true,false,false,false,16,bid_below,3,gamble,\"test, with \"\"quotes\"\"\",N=4;COST_MAX=100;CAP=80;ENGAGEMENT_GAIN=30;EXTRA_TUNING_COST=10;AUDIT_PROB=0.5;FINE=50;ROUNDS=5\n206,3186052587,2,49.8,20,49.8,-29.8,46.9|57.9|2.2,46.9|57.9|2.2,Rival C,20,true,false,true,false,true,0,bid_below,3,gamble,\"test, with \"\"quotes\"\"\",N=4;COST_MAX=100;CAP=80;ENGAGEMENT_GAIN=30;EXTRA_TUNING_COST=10;AUDIT_PROB=0.5;FINE=50;ROUNDS=5\n206,3186052587,3,63,30,63,-33,44.5|97|30.1,44.5|97|30.1,You,30.1,false,false,true,false,true,-32.9,bid_below,3,gamble,\"test, with \"\"quotes\"\"\",N=4;COST_MAX=100;CAP=80;ENGAGEMENT_GAIN=30;EXTRA_TUNING_COST=10;AUDIT_PROB=0.5;FINE=50;ROUNDS=5\n206,3186052587,4,87.5,90,87.5,2.5,84.4|4.5|2.7,84.4|4.5|2.7,Rival C,4.5,true,false,true,false,true,0,bid_below,3,gamble,\"test, with \"\"quotes\"\"\",N=4;COST_MAX=100;CAP=80;ENGAGEMENT_GAIN=30;EXTRA_TUNING_COST=10;AUDIT_PROB=0.5;FINE=50;ROUNDS=5\n206,3186052587,5,12.3,10,12.3,-2.3,98.8|11.3|38.5,98.8|11.3|38.5,You,11.3,false,true,true,true,false,-31,bid_below,3,gamble,\"test, with \"\"quotes\"\"\",N=4;COST_MAX=100;CAP=80;ENGAGEMENT_GAIN=30;EXTRA_TUNING_COST=10;AUDIT_PROB=0.5;FINE=50;ROUNDS=5",
  "rng": [
   0.9797282677609473,
   0.3067522644996643,
